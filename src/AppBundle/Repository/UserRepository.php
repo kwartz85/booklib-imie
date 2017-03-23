@@ -10,4 +10,22 @@ namespace AppBundle\Repository;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findLast($identity) {
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('user.id', 'ui')
+            ->select('user.firstname', 'uf')
+            ->select('user.lastname', 'ui')
+            ->select('user.username', 'ui')
+            ->select('user.email', 'ui')
+            ->select('user.roles', 'ui')
+            ->select('user.id', 'ui')
+            ->select('user.id', 'ui')
+            ->select('user.id', 'ui')
+            ->from('AppBundle:User', 'u')
+            ->setMaxResults($identity)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+
+       <h1 class="container">  Bienvenue, {{ app.user.username }}
+       </h1>
+
+
+        <div> <p>Prénom:  {{ firstname }}</p>
+            <p> Nom:  {{ lastname }}</p>
+            <p> Mail: {{ mail }}</p>
+            {% for role in roles %}
+            <p> Rôle(s):{{ role }}</p>
+            {% endfor %}
+        </div>
+
+        <table class="table table-striped table-condensed">
+            <thead>
+                <tr>
+
+                </tr>
+        </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}
