@@ -15,10 +15,13 @@ class DefaultController extends Controller {
     public function indexAction(Request $request) {
         $categories = $this->getDoctrine()->getRepository("AppBundle:Category")->findAll();
         $lastBooks = $this->getDoctrine()->getRepository("AppBundle:Book")->findLast(3);
+        $users = $this->getDoctrine()->getRepository("AppBundle:User")->findUserWithCount(2);
 
         return $this->render('default/index.html.twig', [
                     "categories" => $categories,
-                    "lastBooks" => $lastBooks
+                    "lastBooks" => $lastBooks,
+                    "users" => $users
+
         ]);
     }
 
@@ -42,4 +45,38 @@ class DefaultController extends Controller {
         ]);
     }
 
+    /**
+     * @Route("/user/{id}", name="show_user")
+     */
+    public function showUserAction(\AppBundle\Entity\User $user){
+        $em = $this->getDoctrine()->getManager();
+
+        return $this->render('user/show.html.twig', array(
+            'user' => $user
+        ));
+    }
+
+    /**
+     * @Route("/search", name="search_book")
+     */
+    public function searchBook(Request $request)
+    {
+        $categories ="";
+        $result ="";
+        if($request->getMethod() === 'POST')
+        {
+            $category = $request->get('selectedCategory');
+            $title= $request->get('searchTitle');
+
+            $result = $this->getDoctrine()->getRepository("AppBundle:Book")->findByNameAndCategory($title, $category);
+
+            $categories = $this->getDoctrine()->getRepository("AppBundle:Category")->findAll();
+
+        }
+
+        return $this->render('search/searchResult.html.twig', [
+            'categories' => $categories,
+            'result' =>  $result
+        ]);
+    }
 }

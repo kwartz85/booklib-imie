@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <section class="container">
+
+        <div class="panel panel-default">
+            {% include 'search/_book_search.html.twig' %}
+        </div>
+
+        <h1>Resultat de la recherche :</h1>
+
+       <div>
+           {% if result %}
+                {% for book in result %}
+                        <div class="thumbnail">
+                            <img src="{{ asset('uploads/' ~  book.image) }}" alt="{{ book.title }}" height="200" width="150">
+                            <div class="caption">
+                                <h3>{{ book.title }}</h3>
+                                <div class="book-infos">
+                                    <span class="label label-info"><i class="fa fa-user"></i> {{ book.author.fullname }}</span>
+                                    {% for category in book.categories %}
+                                        <span class="label label-success"><i class="fa fa-tag"></i>{{ category.name }}</span>
+                                    {% endfor %}
+                                </div>
+                                <p><a href="{{ path('show_book' ,{'slug' : book.slug}) }}" class="btn btn-primary" role="button"><i class="fa fa-eye"></i> Voir plus</a></p>
+                            </div>
+                        </div>
+
+                {% endfor %}
+           {% else %}
+               <span>Désolé, aucune correspondance n'a été trouvée.</span>
+           {% endif %}
+       </div>
+    </section>
+
+{% endblock %}

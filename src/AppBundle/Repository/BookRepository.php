@@ -33,12 +33,46 @@ class BookRepository extends \Doctrine\ORM\EntityRepository
                  ORDER BY RAND()
                  LIMIT ".$limit." ";
 
-        //var_dump($sql);die();
-        $em = $this->getEntityManager();//getDoctrine()->getManager();
+
+        $em = $this->getEntityManager();
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->execute();
-
-        //var_dump($stmt);die();
         return $stmt->fetchAll();
+    }
+
+    public function findByNameAndCategory($title, $category)
+    {
+        //On prépare la requête
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        //On selectionne les livres où le titre est = au parametre 'word'
+        //set parameter permet de definir ce qu'est word (ici, $title)
+        //Si la catagorie n'as pas été selectionnée, on termine la requete
+        //Sinon avec un leftjoin on recupere les categories de la meme maniere que les livres
+        $qb->select('b')
+            ->from('AppBundle:Book','b')
+            ->where($qb->expr()->like('b.title',':word'))
+            ->setParameter('word', '%'.$title.'%');
+            if($category != NULL)
+            {
+                $qb ->leftJoin('b.categories' , 'bc')
+                    ->andWhere($qb->expr()->eq('bc.id',':cat'))
+                    ->setParameter('cat', $category);
+
+            }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findByName($title)
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('b')
+            ->from('AppBundle:Book','b')
+            ->where('b.title LIKE :word')
+            ->setParameter('word', '%'.$title.'%')
+            ->getQuery()
+            ->getResult();
     }
 }

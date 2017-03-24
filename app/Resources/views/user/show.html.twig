@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ user.username }}
+{% endblock %}
+
+{% block body %}
+    <section class="container">
+    <h1>User</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id : </th>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th>Username : </th>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <th>Firstname : </th>
+                <td>{{ user.firstname }}</td>
+            </tr>
+            <tr>
+                <th>Lastname : </th>
+                <td>{{ user.lastname }}</td>
+            </tr>
+            <tr>
+                <th>Email : </th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>Borrows : </th>
+                <td>
+                    <ul>
+                    {% for borrow in user.borrows %}
+                        <li>
+                            {{ borrow.book.title }}
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    </section>
+{% endblock %}

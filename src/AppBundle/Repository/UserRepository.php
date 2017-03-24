@@ -10,4 +10,17 @@ namespace AppBundle\Repository;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findUserWithCount($limit){
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('u AS user, COUNT(b.id) AS count_borrows')
+            ->from('AppBundle:user', 'u')
+            ->leftJoin('u.borrows', 'b')
+            ->groupBy('u.id')
+            ->orderBy('u.id', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

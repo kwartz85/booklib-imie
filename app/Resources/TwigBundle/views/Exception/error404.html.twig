@@ -1,0 +1,11 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <h1>page d'erreur 404</h1>
+
+
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+
+    <div>Votre demande ne peut pas être traitée merci de retourner sur la page d'accueil   {{ 'home_page' }}</div>
+        {% endif %}
+{% endblock %}

@@ -1,0 +1,24 @@
+
+    <div class="panel-heading">
+        <h2 class="panel-title text-center">Rechercher un livre</h2>
+    </div>
+    <div class="panel-body">
+        <form class="form-inline text-center"v action="{{ path('search_book') }}" method="post">
+            <div class="form-group">
+                <label class="sr-only" for="inputTitle">Titre</label>
+                <input type="text" class="form-control" id="inputTitle" name="searchTitle" placeholder="Titre">
+            </div>
+            <div class="form-group">
+                <select class="form-control" id="selectCategory" name="selectedCategory">
+                    <option disabled selected>Toutes les catégories</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-default">
+                <i class="fa fa-search"></i>
+                Rechercher
+            </button>
+        </form>
+    </div>

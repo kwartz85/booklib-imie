@@ -5,36 +5,12 @@
         <div class="container">
             <div class="jumbotron">
 
-                <h1>La plateforme n°1 des lecteurs !</h1>
+                <h1>Rapp'iréo: plateforme des rapports à l'iréo !</h1>
 
-                <p>Booklib est une plateforme vous permettant de visualiser les livres disponibles dans les boîtes à livres autour de chez vous.</p>
-                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
+                <p>Rapp'iréo vous permet de déposer vos propres rapports lors de votre formation mais également à consulter les rapports déjà réaliser. Bon surf.</p>
 
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h2 class="panel-title text-center">Rechercher un livre</h2>
-                    </div>
-                    <div class="panel-body">
-                        <form class="form-inline text-center">
-                            <div class="form-group">
-                                <label class="sr-only" for="inputTitle">Titre</label>
-                                <input type="text" class="form-control" id="inputTitle" placeholder="Titre">
-                            </div>
-                            <div class="form-group">
-                                <label class="sr-only" for="selectCategory">Email</label>
-                                <select class="form-control" id="selectCategory">
-                                    <option disabled selected>Toutes les catégories</option>
-                                    {% for category in categories %}
-                                        <option>{{ category.name }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-default">
-                                <i class="fa fa-search"></i>
-                                Rechercher
-                            </button>
-                        </form>
-                    </div>
+                    {% include 'search/_book_search.html.twig' %}
                 </div>
             </div>
         </div>
@@ -46,7 +22,7 @@
 
             <div class="col-md-8 last-books">
                 <h2>Les derniers livres</h2>
-                
+
                 <div class="row">
                     {% for book in lastBooks %}
                         <div class="col-sm-6 col-md-4">
@@ -84,34 +60,19 @@
                         <h2 class="panel-title">Top utilisateurs</h2>
                     </div>
                     <div class="panel-body">
-                        <div class="list-group">
-                            <a href="#" class="list-group-item">
-                                <span class="badge">223 échanges</span>
-                                Guillaume C.
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <span class="badge">187 échanges</span>
-                                Florian C.
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <span class="badge">155 échanges</span>
-                                Emilie D.
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <span class="badge">152 échanges</span>
-                                Bastien B.
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <span class="badge">150 échanges</span>
-                                Kevin C.
-                            </a>
-                        </div>
+                        <div class="list-group">                            {% for item in users %}
+                                <a href="{{ path('show_user', {'id':item.user.id}) }}" class="list-group-item">
+                                    {{ item.user.username }} : <span class="badge">{{ item.count_borrows }} échanges</span>
+                                </a>
+                            {% endfor %}                        </div>
                         <a class="btn btn-primary btn-block"><i class="fa fa-users"></i> Voir tous les utilisateurs</a>
                     </div>
                 </div>
             </div>
-
         </div>
+
+    </section>
+    <section>
 
     </section>
 
