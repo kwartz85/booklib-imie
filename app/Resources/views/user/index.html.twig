@@ -1,29 +1,35 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container">
+    <section class="container">
 
-       <h1 class="container">  Bienvenue, {{ app.user.username }}
-       </h1>
+        <h1>  Bienvenue, {{ user.username }}
+        </h1>
 
 
-        <div> <p>Prénom:  {{ firstname }}</p>
-            <p> Nom:  {{ lastname }}</p>
-            <p> Mail: {{ mail }}</p>
-            {% for role in roles %}
-            <p> Rôle(s):{{ role }}</p>
+        <div> <p>Prénom:  {{ user.firstname }}</p>
+            <p> Nom:  {{ user.lastname }}</p>
+            <p> Mail: {{ user.email }}</p>
+            {% for role in user.roles %}
+                <p> Rôle(s):{{ role }}</p>
             {% endfor %}
         </div>
-
+        <h2> échangés réalisés :</h2>
         <table class="table table-striped table-condensed">
             <thead>
-                <tr>
-
-                </tr>
-        </thead>
+            <th>livres échangés :</th>
+            <th>auteur du livre échangé :</th>
+            <th>date d'échange :</th>
+            </thead>
             <tbody>
+            {% for borrow in lastBorrow %}
+            <tr>
+                <td>{{ borrow.book }}</td>
+                <td>{{ borrow.book.author }}</td>
+                <td>{{ borrow.datestart|date("d/m/Y") }}</td>
+            </tr>
             </tbody>
+             {% endfor %}
         </table>
-
-    </div>
+    </section>
 {% endblock %}

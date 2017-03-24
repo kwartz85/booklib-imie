@@ -366,4 +366,9 @@ class Book {
     {
         return $this->slug;
     }
+
+    function __toString()
+    {
+        return $this->getTitle();
+    }
 }

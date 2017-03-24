@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,19 +16,17 @@ class UserProfileController extends Controller
 
     public function userProfileAction(Request $request)
     {
-        $usr= $this->get('security.token_storage')->getToken()->getUser();
-        $usrfirstname = $usr->getFirstname();
-        $usrlastname = $usr->getLastname();
-        $usrmail = $usr->getEmail();
-        $usrroles = $usr->getRoles();
+        /** @var User $user */
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $lastBorrow= $this->getDoctrine()->getRepository("AppBundle:Borrow")->findLastBorrow($user->getId());
 
         return $this->render('user/index.html.twig',
             [
-                "firstname" => $usrfirstname,
-                "lastname" => $usrlastname ,
-                "mail" => $usrmail,
-                "roles" => $usrroles
+                "user" => $user,
+                "lastBorrow"=> $lastBorrow
             ]
         );
     }
+
+
 }

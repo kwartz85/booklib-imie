@@ -21,9 +21,20 @@
                     {% endfor %}
                 </div>
                 <p>{{ book.synopsis }}</p>
+
+                <section class="container">
+                    <h3>Suggestion de livres</h3>
+                </section>
+
+                {% for book in randomBooks %}
+                    <div class="col-sm-6 col-md-4">
+                        {% include 'book/_book_suggestion.html.twig' with {'book' : book} %}
+                    </div>
+                {% endfor %}
             </div>
         </div>
 
     </section>
+
 
 {% endblock %}

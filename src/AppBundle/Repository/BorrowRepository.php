@@ -10,4 +10,30 @@ namespace AppBundle\Repository;
  */
 class BorrowRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findLast($limit)
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('b', 'a')
+            ->from('AppBundle:Book', 'b')
+            ->innerJoin('b.author', 'a')
+            ->orderBy('b.createdAt', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+    public function findLastBorrow($userId)
+    {
+        $qb =$this->getEntityManager()->createQueryBuilder();
+
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('b')
+            ->from('AppBundle:Borrow', 'b')
+            ->where ($qb->expr()->eq('b.user',$userId))
+            ->orderBy('b.dateStart', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
 }

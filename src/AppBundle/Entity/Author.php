@@ -145,7 +145,7 @@ class Author
     public function getFullname () {
         return $this->firstname . ' ' . $this->lastname;
     }
-    
+
     public function __toString() {
         return $this->getFullname();
     }

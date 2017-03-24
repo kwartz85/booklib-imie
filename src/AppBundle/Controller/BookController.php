@@ -24,14 +24,11 @@ class BookController extends Controller {
      */
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
-
         $books = $em->getRepository('AppBundle:Book')->findAll();
-
         return $this->render('admin/book/index.html.twig', array(
-                    'books' => $books,
+            'books' => $books,
         ));
     }
-
     /**
      * Creates a new book entity.
      *
@@ -46,26 +43,20 @@ class BookController extends Controller {
         if ($form->isSubmitted() && $form->isValid()) {
             /* @var $file \Symfony\Component\HttpFoundation\File\UploadedFile */
             $file = $book->getImage();
-
             $fileName = md5(uniqid()) . '.' . $file->guessExtension();
-
             $file->move($this->getParameter('upload_dir'), $fileName);
-
             $book->setImage($fileName);
-            
             $slugger = $this->get('app.slugger');
             $book->setSlug($slugger->slugify($book->getReference() . '-' . $book->getTitle()));
-            
             $em = $this->getDoctrine()->getManager();
             $em->persist($book);
             $em->flush($book);
-
             return $this->redirectToRoute('admin_book_show', array('id' => $book->getId()));
         }
 
         return $this->render('admin/book/new.html.twig', array(
-                    'book' => $book,
-                    'form' => $form->createView(),
+            'book' => $book,
+            'form' => $form->createView(),
         ));
     }
 
@@ -79,8 +70,8 @@ class BookController extends Controller {
         $deleteForm = $this->createDeleteForm($book);
 
         return $this->render('admin/book/show.html.twig', array(
-                    'book' => $book,
-                    'delete_form' => $deleteForm->createView(),
+            'book' => $book,
+            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -106,9 +97,9 @@ class BookController extends Controller {
         }
 
         return $this->render('admin/book/edit.html.twig', array(
-                    'book' => $book,
-                    'edit_form' => $editForm->createView(),
-                    'delete_form' => $deleteForm->createView()
+            'book' => $book,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView()
         ));
     }
 
@@ -140,10 +131,10 @@ class BookController extends Controller {
      */
     private function createDeleteForm(Book $book) {
         return $this->createFormBuilder()
-                        ->setAction($this->generateUrl('admin_book_delete', array('id' => $book->getId())))
-                        ->setMethod('DELETE')
-                        ->getForm()
-        ;
+            ->setAction($this->generateUrl('admin_book_delete', array('id' => $book->getId())))
+            ->setMethod('DELETE')
+            ->getForm()
+            ;
     }
 
 }
